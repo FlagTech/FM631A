@@ -20,4 +20,4 @@ while True:
     if(staDown == 0):
         mult.volumeDecrement()
         print("音量減弱")
-    time.sleep(0.05)
+    time.sleep(0.15)
