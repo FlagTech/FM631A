@@ -17,10 +17,12 @@ class BLE_HID:
         F_WRITE = bluetooth.FLAG_WRITE
         F_READ_WRITE = bluetooth.FLAG_READ | bluetooth.FLAG_WRITE
         F_READ_NOTIFY = bluetooth.FLAG_READ | bluetooth.FLAG_NOTIFY
-
+        F_READ_WRITE_NORESPONSE = bluetooth.FLAG_READ | bluetooth.FLAG_WRITE | bluetooth.FLAG_WRITE_NO_RESPONSE
+        
         ATT_F_READ = 0x01
         ATT_F_WRITE = 0x02
-
+        ATT_F_READ_WRITE = ATT_F_READ | ATT_F_WRITE
+        
         # 建立伺服器
         hid_service = (
             UUID(0x1812),  # Human Interface Device            人機介面設備
@@ -28,8 +30,8 @@ class BLE_HID:
                 (UUID(0x2A4A), F_READ),  # HID information     HID信息
                 (UUID(0x2A4B), F_READ),  # HID report map      HID報告圖
                 (UUID(0x2A4C), F_WRITE),  # HID control point  HID控制點
-                (UUID(0x2A4D), F_READ_NOTIFY, ((UUID(0x2908), ATT_F_READ),)),  # HID report / reference
-                (UUID(0x2A4D), F_READ_WRITE, ((UUID(0x2908), ATT_F_READ),)),  # HID report / reference
+                (UUID(0x2A4D), F_READ_NOTIFY, ((UUID(0x2908), ATT_F_READ),(UUID(0x2902), ATT_F_READ),)),  # HID report / reference
+                (UUID(0x2A4D), F_READ_WRITE_NORESPONSE, ((UUID(0x2908), ATT_F_READ),)),  # HID report / reference
                 (UUID(0x2A4D), F_READ_NOTIFY, ((UUID(0x2908), ATT_F_READ),)),  # HID report / reference
                 (UUID(0x2A4E), F_READ_WRITE),  # HID protocol mode
             ),
@@ -92,7 +94,7 @@ class BLE_HID:
         self.ble.config(gap_name=name)
         handles = self.ble.gatts_register_services((hid_service,))
         #print(handles)
-        h_info, h_hid, _, self.h_rep, h_d1, _, h_d2, self.h_com, h_d3, h_proto = handles[0]
+        h_info, h_hid, _, self.h_rep, h_d1, _, _, h_d2, self.h_com, h_d3, h_proto = handles[0]
         #print(self.HID_REPORT_MAP)
         # set initial data  設定初始資料
         self.ble.gatts_write(h_info, b"\x01\x01\x00\x02")  # HID info: ver=1.1, country=0, flags=normal
