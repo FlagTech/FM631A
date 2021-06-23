@@ -4,8 +4,8 @@ from ble_uart import BLE_UART
 
 adc_pin=Pin(32)
 adc = ADC(adc_pin)         # 建立 ADC 物件
-adc.width(ADC.WIDTH_12BIT) # 設定 ADC 範圍。9BIT代表範圍是 0~511
-adc.atten(ADC.ATTN_11DB)   # 將最大感測電壓設定成 3.6V, 超過 3.6V 時會得到 ADC 最大值 511
+adc.width(ADC.WIDTH_12BIT) # 設定 ADC 範圍。12BIT代表範圍是 0~4095
+adc.atten(ADC.ATTN_11DB)   # 將最大感測電壓設定成 3.6V, 超過 3.6V 時會得到 ADC 最大值 4095
 
 ble = BLE_UART("temperature")
 
