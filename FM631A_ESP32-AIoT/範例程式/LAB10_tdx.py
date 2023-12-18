@@ -1,3 +1,7 @@
+# 手冊上使用的 PTX 服務已經在 2022 年結束，所以改用 TDX 服務
+# 相關說明請參考本書線上服務專區教學文件：
+# https://www.flag.com.tw/bk/t/FM631A
+
 # 無會員：當天次數 50 次
 from machine import Pin,PWM
 import network     
