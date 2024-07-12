@@ -79,7 +79,7 @@ class BLE_UART():
     def advertiser(self):
         # 藍牙名稱
         name = bytes(self.name, 'UTF-8')
-        self.ble.gap_advertise(100, bytearray('\x02\x01\x02') + bytearray((len(name) + 1, 0x09)) + name)
+        self.ble.gap_advertise(100, bytearray(b'\x02\x01\x02') + bytearray((len(name) + 1, 0x09)) + name)
     # 取得數值
     def get(self):
         try:
